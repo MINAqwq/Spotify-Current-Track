@@ -10,5 +10,4 @@ If it works you will find directory named "currentsong" with a txt named "curren
 This file will show what you're currently hearing and with OBS you can show this on screen while streaming or recording.
 
 ### :warning: Important :warning:
-The Spotify tab needs to be open, otherwise you will get an error.
-You can control it over the app, but dont close the tab.
+The Spotify tab needs to be open or u have to play something while enter the token, otherwise you will get an error.
