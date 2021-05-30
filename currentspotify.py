@@ -13,13 +13,11 @@ def clear():
     if (platform.system()) == "Darwin":
         os.system("clear")
 
-url = "https://api.spotify.com/v1/me/player/currently-playing"
-token = ""
-
-
-
 
 def get_current_track(access_token):
+
+    url = "https://api.spotify.com/v1/me/player/currently-playing"
+
     response = requests.get(
         url,
         headers={
@@ -60,14 +58,7 @@ def main():
             f.write(str(current))
     except KeyboardInterrupt:
         f.close()
-        print("Stoped!")
+        print("\nStoped!")
 
 
 main()
-
-
-
-
-
-
-
