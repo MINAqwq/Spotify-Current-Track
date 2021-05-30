@@ -2,6 +2,7 @@ import requests
 import time
 import os
 import platform
+import sys
 
 def clear():
     if(platform.system()) == "Linux":
@@ -14,25 +15,43 @@ def clear():
         os.system("clear")
 
 
+
 def get_current_track(access_token):
 
-    url = "https://api.spotify.com/v1/me/player/currently-playing"
+    try:
+        try:
 
-    response = requests.get(
-        url,
-        headers={
-            "Authorization": f"Bearer {access_token}"
-        }
-    )
-    json_resp = response.json()
+            url = "https://api.spotify.com/v1/me/player/currently-playing"
 
-    track_name = json_resp['item']['name']
-    artists = [artist for artist in json_resp['item']['artists']]
+            response = requests.get(
+                url,
+                headers={
+                    "Authorization": f"Bearer {access_token}"
+                }
+            )
+            json_resp = response.json()
 
-    artist_names = ', '.join([artist['name'] for artist in artists])
+            track_name = json_resp['item']['name']
+            artists = [artist for artist in json_resp['item']['artists']]
 
-    current_track_info = str(track_name) + " - " + str(artist_names)
+            artist_names = ', '.join([artist['name'] for artist in artists])
 
+            current_track_info = str(track_name) + " - " + str(artist_names)
+
+        except KeyError:
+            print("\nInvalid Token (Press Enter)")
+            input("")
+            clear()
+            main()
+
+    except TypeError:
+        clear()
+        print("Request Error")
+        time.sleep(0.5)
+        print("To avoid this use Spotify web in your Browser (Press Enter)")
+        input("")
+        clear()
+        main()
 
     return current_track_info
 
@@ -43,6 +62,8 @@ def main():
     token = str(input(""))
     clear()
     print("Starting...")
+
+    current = get_current_track(token)
 
     if os.path.isdir("currentsong") == False:
         os.mkdir("currentsong")
@@ -59,6 +80,7 @@ def main():
     except KeyboardInterrupt:
         f.close()
         print("\nStoped!")
+
 
 
 main()
